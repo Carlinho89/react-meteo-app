@@ -6,8 +6,12 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className={classnames(this.props.className)}> 
-        <p>Hello There!</p>
+      <div className={classnames(this.props.className, 'container')}>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <p>Hello There!</p>
+            </div>
+        </div>
       </div>
     )
   }
