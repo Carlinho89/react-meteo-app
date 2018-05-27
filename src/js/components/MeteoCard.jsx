@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {geolocated} from 'react-geolocated';
 
-import { fahrenheitToCelsius } from '../../utils/degreesHelper'
-import { weekDays, getCurrentDay } from '../../utils/weekDays';
+import { fahrenheitToCelsius, mapConditionToIcon } from '../../utils/helper'
+import { weekDays, getCurrentDay, getCurrentDayId } from '../../utils/weekDays';
 
 class MeteoCard extends Component {
     componentWillReceiveProps(nextProps) {
@@ -84,7 +84,13 @@ class MeteoCard extends Component {
                 </div>
                 <div className={classnames('row', 'widget-meteocard-statuscontainer')}>
                     <div className="weather-status-container">
-                        <i className={weatherIconClass} />
+                        <i className={
+                            mapConditionToIcon(
+                                isWeathercastQueried && query 
+                                    ? query.results.channel.item.condition.code
+                                    : null
+                            )
+                        } />
                     </div>
                 </div>
                 <div className={classnames('row', 'widget-meteocard-weather-details')}>
