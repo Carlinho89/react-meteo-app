@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import {geolocated} from 'react-geolocated';
 
 import { fahrenheitToCelsius, mapConditionToIcon } from '../../utils/helper'
-import { weekDays, getCurrentDay, getCurrentDayId } from '../../utils/weekDays';
+import { weekDays, getCurrentDay } from '../../utils/weekDays';
 
 class MeteoCard extends Component {
     componentWillReceiveProps(nextProps) {
