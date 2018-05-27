@@ -5,6 +5,7 @@ import '../../styles/_scss/main.scss';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import meteoActions from '../../actions/meteo';
+import MeteoCard from './MeteoCard';
 
 const mapStateToProps = state => ({
     meteoTest: state.meteo.test
@@ -18,12 +19,11 @@ const App = ({className, meteoTest, testMeteo}) => {
     return (
       <div className={classnames(className, 'container')}>
         <div className="row mt-5">
-            <div className="col-md-12">
-                <p className="big-orange-text">Hello There!</p>
-                <p>Test: {meteoTest}</p>
-                <button 
-                    className={classnames('btn', 'btn-success')} 
-                    disabled={!testMeteo} onClick={testMeteo}> Click Me </button>
+            <div className="col-xs-12">
+                <MeteoCard 
+                    meteoTest={meteoTest}
+                    testMeteo={testMeteo}
+                />
             </div>
         </div>
       </div>

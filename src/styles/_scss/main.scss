@@ -1,6 +1,17 @@
 $color-orange: #f98a09;
+$color-black: #000;
+$color-light-blue: #007bff;
+$color-dark-blue: #0062cc; 
 
 .big-orange-text {
     font-size: 20px;
     color: $color-orange;   
+}
+
+.widdet-meteocard {
+    min-width: 255px;
+    min-height: 365px;
+    border: 1px solid $color-black;
+    border-radius: 4px;
+    background-color:  $color-dark-blue;
 }
