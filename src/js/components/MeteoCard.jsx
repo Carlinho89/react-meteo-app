@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import {geolocated} from 'react-geolocated';
 
 import { fahrenheitToCelsius } from '../../utils/degreesHelper'
+import { weekDays, getCurrentDay } from '../../utils/weekDays';
 
 class MeteoCard extends Component {
     componentWillReceiveProps(nextProps) {
@@ -115,27 +116,18 @@ class MeteoCard extends Component {
                     </div>
                 </div>
                 <div className={classnames('flex-container', '')}>
-                    <div>
-                        <p className="widget-meteocard-weekday">Mon</p>
-                    </div>
-                    <div>
-                        <p className="widget-meteocard-weekday">Tue</p>
-                    </div>
-                    <div className="--selected">
-                        <p className="widget-meteocard-weekday">Wed</p>
-                    </div>
-                    <div>
-                        <p className="widget-meteocard-weekday">Thu</p>
-                    </div>
-                    <div>
-                        <p className="widget-meteocard-weekday">Fri</p>
-                    </div>
-                    <div>
-                        <p className="widget-meteocard-weekday">Sat</p>
-                    </div>  
-                    <div>
-                        <p className="widget-meteocard-weekday">Sun</p>
-                    </div>
+                    {
+                        weekDays.map(day => 
+                            (<div 
+                                key={day}
+                                className={classnames({
+                                    '--selected': day === getCurrentDay()
+                                })}
+                            >
+                                <p className="widget-meteocard-weekday">{day}</p>
+                            </div>)
+                        )
+                    }
                 </div>
             </div>
           );
