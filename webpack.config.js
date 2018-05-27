@@ -15,7 +15,14 @@ module.exports = {
           exclude: /node_modules/,
           use: [
             "babel-loader",
-          ]
+          ],
+          resolve: { 
+            extensions: [
+              "",
+              ".js", 
+              ".jsx"
+            ] 
+          }
         },
         {
           test: /\.html$/,
@@ -48,7 +55,7 @@ module.exports = {
             "postcss-loader",
             "sass-loader"
           ]
-        },
+        }
       ]
     },
     plugins: [
