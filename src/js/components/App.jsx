@@ -17,9 +17,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 const App = ({className, meteoTest, testMeteo}) => {
     return (
-      <div className={classnames(className, 'container')}>
+      <div className={classnames(className, 'container-fluid')}>
         <div className="row mt-5">
-            <div className="col-xs-12">
+            <div className="offset-sm-4 col-sm-5">
                 <MeteoCard 
                     meteoTest={meteoTest}
                     testMeteo={testMeteo}
