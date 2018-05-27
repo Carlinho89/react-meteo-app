@@ -3,18 +3,27 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import '../../styles/_scss/main.scss';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import meteoActions from '../../actions/meteo';
 
 const mapStateToProps = state => ({
     meteoTest: state.meteo.test
 });
+const mapDispatchToProps = dispatch => bindActionCreators({
+    testMeteo: meteoActions.testMeteo
+}, dispatch);
 
-const App = ({className, meteoTest}) => {
+
+const App = ({className, meteoTest, testMeteo}) => {
     return (
       <div className={classnames(className, 'container')}>
         <div className="row mt-5">
             <div className="col-md-12">
                 <p className="big-orange-text">Hello There!</p>
                 <p>Test: {meteoTest}</p>
+                <button 
+                    className={classnames('btn', 'btn-success')} 
+                    disabled={!testMeteo} onClick={testMeteo}> Click Me </button>
             </div>
         </div>
       </div>
@@ -23,7 +32,8 @@ const App = ({className, meteoTest}) => {
 
 App.propTypes = {
     className: PropTypes.string,
-    meteoTest: PropTypes.string.isRequired
+    meteoTest: PropTypes.string.isRequired,
+    testMeteo: PropTypes.func.isRequired
 }
 App.defaultProps = {
     className: null
@@ -31,5 +41,5 @@ App.defaultProps = {
 
 export default connect(
     mapStateToProps,
-    null
+    mapDispatchToProps
 )(App);

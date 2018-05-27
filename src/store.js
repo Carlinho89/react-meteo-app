@@ -1,13 +1,19 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 
 // Middelwares
-// TO-DO
+import createSagaMiddleware from 'redux-saga';
+
 import rootReducer from './reducers';
+
+// Sagas
+import rootSaga from './sagas/rootSaga';
+
+const sagaMiddleware = createSagaMiddleware();
 
 const initialState = {};
 const enhancers = [];
 const middleware = [
-    // To-Do
+    sagaMiddleware
 ];
 
 if (process.env.NODE_ENV === 'development') {
@@ -28,5 +34,8 @@ const store = createStore(
   initialState,
   composedEnhancers
 );
+
+// run the root saga
+sagaMiddleware.run(rootSaga);
 
 export  default store;
