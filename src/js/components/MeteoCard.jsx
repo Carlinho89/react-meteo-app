@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import {geolocated} from 'react-geolocated';
 
+import { fahrenheitToCelsius } from '../../utils/degreesHelper'
+
 class MeteoCard extends Component {
     componentWillReceiveProps(nextProps) {
         if(!this.props.coords && !!nextProps.coords){
             // time to fetch the weathercast info!
-            this.props.fetchMeteoWatcher(nextProps.coords.latitude, nextProps.coords.longitude)
+            this.props.queryWeathercast(nextProps.coords.latitude, nextProps.coords.longitude);
         }
     }
 
@@ -17,22 +19,35 @@ class MeteoCard extends Component {
             weatherIconClass,
             perceivedTemp,
             humidity,
+            query,
+            isQueryingWeathercast,
+            isWeathercastQueried, 
             coords,
             isGeolocationAvailable, // boolean flag indicating that the browser supports the Geolocation API
             isGeolocationEnabled, // boolean flag indicating that the user has allowed the use of the Geolocation API
-            positionError
+            positionError,
+            weathercastError
         } = this.props;
         if (isGeolocationAvailable === false) {
-            return 
+            return (
                 <div className="alert alert-danger" role="alert">
                     Sorry! It seems like your browser is not supporting the Geolocation API
                 </div>
+            );
         }
         else if (isGeolocationAvailable && isGeolocationEnabled === false) {
-            return 
+            return ( 
                 <div className="alert alert-warning" role="alert">
                     Sorry! Please allow us to have access to your location
                 </div>
+            );
+        }
+        else if (!!weathercastError) {
+            return(
+                <div className="alert alert-danger" role="alert">
+                    Error: {weathercastError}
+                </div>
+            );
         }
         return (
             <div className={classnames(className, 'widget-meteocard', 'container-fluid')}>
@@ -46,17 +61,23 @@ class MeteoCard extends Component {
                                 aria-hidden="true"
                             /> 
                                 {
-                                    isGeolocationAvailable &&
-                                    isGeolocationEnabled &&
-                                    coords
-                                        ? coords.latitude // To-Do: replace with real location
+                                    !isQueryingWeathercast &&
+                                    isWeathercastQueried &&
+                                    query
+                                        ? query.results.channel.location.city 
                                         : 'Current Location'
                                 }
                         </p>
                     </div>
                     <div className={classnames('col-sm-2', 'offset-sm-3')}>
                         <p className="widget-meteocard-celsius">
-                            60°
+                            {
+                                !isQueryingWeathercast &&
+                                isWeathercastQueried &&
+                                query
+                                    ? `${fahrenheitToCelsius(query.results.channel.item.condition.temp)}°` 
+                                    : '???'
+                            }
                         </p>
                     </div>
                 </div>
@@ -70,8 +91,10 @@ class MeteoCard extends Component {
                         <p>Feels Like:</p>
                         <p>
                             { 
-                                perceivedTemp 
-                                    ? perceivedTemp
+                                !isQueryingWeathercast &&
+                                isWeathercastQueried &&
+                                query
+                                    ? `${fahrenheitToCelsius(query.results.channel.wind.chill)}°` 
                                     : '???'
                             }
                         </p>
@@ -82,8 +105,10 @@ class MeteoCard extends Component {
                         </p>
                         <p>
                             {
-                                humidity 
-                                    ? humidity
+                                !isQueryingWeathercast &&
+                                isWeathercastQueried &&
+                                query
+                                    ? `${query.results.channel.atmosphere.humidity} %` 
                                     : '???'
                             }
                         </p>
@@ -120,9 +145,9 @@ class MeteoCard extends Component {
 MeteoCard.propTypes = {
     className: PropTypes.string,
     weatherIconClass: PropTypes.string,
-    perceivedTemp: PropTypes.number,
-    humidity: PropTypes.number,
-    currentLocation: PropTypes.string,
+    queryWeathercast: PropTypes.func.isRequired,
+    query: PropTypes.object.isRequired,
+    weathercastError: PropTypes.object,
     // from geolocated high order component
     coords: PropTypes.object,
     isGeolocationAvailable: PropTypes.bool, // boolean flag indicating that the browser supports the Geolocation API
@@ -133,9 +158,8 @@ MeteoCard.propTypes = {
 MeteoCard.defaultProps = {
     className: null,
     weatherIconClass: 'fa fa-spinner fa-spin',
-    perceivedTemp: null,
-    humidity: null,
-    currentLocation: null
+    weathercastError: null,
+    positionError: null
 }
 
 export default geolocated({

@@ -1,24 +1,39 @@
 import {handleActions} from 'redux-actions';
-import meteoActions from '../actions/meteo';
-
+import { QUERY_WEARHERCAST } from '../actions/meteo';
+import { QUERY_WEARHERCAST_SUCCESS, QUERY_WEARHERCAST_FAIL} from '../sagas/meteoSaga';
 const defaultState = {
-    // from https://www.openweathermap.org/current
-    location: {
-        coord: {"lon":139,"lat":35},
-        sys: {"country":"JP","sunrise":1369769524,"sunset":1369821049},
-        weather: [{"id":804,"main":"clouds","description":"overcast clouds","icon":"04n"}],
-        main: {"temp":289.5,"humidity":89,"pressure":1013,"temp_min":287.04,"temp_max":292.04},
-        wind: {"speed":7.31,"deg":187.002},
-        rain: {"3h":0},
-        clouds: {"all":92},
-        dt: 1369824698,
-        id: 1851632,
-        name: "Shuzenji",
-        cod: 200
-    }
+    query: {},
+    isLoading: false,
+    isLoaded: false,
+    error: null
 };
 
 const reducer = handleActions({
+    [QUERY_WEARHERCAST]: (state) => {
+        return {
+            ...state,
+            isLoading: true,
+            isLoaded: false,
+            error: null
+        };
+    },
+    [QUERY_WEARHERCAST_FAIL]: (state, action) => {
+        return {
+            ...state,
+            isLoading: false,
+            isLoaded: false,
+            error: action.payload
+        };
+    },
+    [QUERY_WEARHERCAST_SUCCESS]: (state, action) => {
+        return {
+            ...state,
+            isLoading: false,
+            isLoaded: true,
+            query: action.payload.query,
+            error: null
+        };
+    }
 }, defaultState);
 
 export default reducer;
