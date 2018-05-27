@@ -1,10 +1,15 @@
 import {createAction} from 'redux-actions';
 
 // Action types
-export const TEST_METEO_ACTION = 'TEST_METEO_ACTION';
+export const QUERY_WEARHERCAST = 'QUERY_WEARHERCAST';
 
-const testMeteo = createAction(TEST_METEO_ACTION);
+const queryWeathercast = createAction(QUERY_WEARHERCAST, (lat, lon) => {
+    return {
+        lat,
+        lon
+    };
+})
 
 export default {
-    testMeteo
+    queryWeathercast
 };

@@ -8,22 +8,18 @@ import meteoActions from '../../actions/meteo';
 import MeteoCard from './MeteoCard';
 
 const mapStateToProps = state => ({
-    meteoTest: state.meteo.test
 });
 const mapDispatchToProps = dispatch => bindActionCreators({
-    testMeteo: meteoActions.testMeteo
+    // To-Do
 }, dispatch);
 
 
-const App = ({className, meteoTest, testMeteo}) => {
+const App = ({className, getLocation, location}) => {
     return (
       <div className={classnames(className, 'container-fluid')}>
         <div className="row mt-5">
             <div className="offset-sm-4 col-sm-5">
-                <MeteoCard 
-                    meteoTest={meteoTest}
-                    testMeteo={testMeteo}
-                />
+                <MeteoCard />
             </div>
         </div>
       </div>
@@ -31,9 +27,7 @@ const App = ({className, meteoTest, testMeteo}) => {
 }
 
 App.propTypes = {
-    className: PropTypes.string,
-    meteoTest: PropTypes.string.isRequired,
-    testMeteo: PropTypes.func.isRequired
+    className: PropTypes.string
 }
 App.defaultProps = {
     className: null
@@ -41,5 +35,5 @@ App.defaultProps = {
 
 export default connect(
     mapStateToProps,
-    mapDispatchToProps
+    null
 )(App);
