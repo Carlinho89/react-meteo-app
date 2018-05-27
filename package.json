@@ -15,7 +15,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "browserslist": ["last 2 versions"],
+  "browserslist": [
+    "last 2 versions"
+  ],
   "bugs": {
     "url": "https://github.com/Carlinho89/react-meteo-app/issues"
   },
@@ -33,8 +35,6 @@
     "mini-css-extract-plugin": "^0.4.0",
     "node-sass": "^4.9.0",
     "postcss-loader": "^2.1.5",
-    "prop-types": "^15.6.1",
-    "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "sass-loader": "^7.0.1",
     "url-loader": "^1.0.1",
@@ -43,6 +43,8 @@
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
-    "classnames": "^2.2.5"
+    "classnames": "^2.2.5",
+    "prop-types": "^15.6.1",    
+    "react": "^16.4.0"
   }
 }

@@ -1,21 +1,18 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
-import style from '../../styles/_scss/main.scss';
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import '../../styles/_scss/main.scss';
 
-export default class App extends Component {
-
-  render() {
+const App = ({className}) => {
     return (
-      <div className={classnames(this.props.className, 'container')}>
+      <div className={classnames(className, 'container')}>
         <div className="row mt-5">
             <div className="col-md-12">
                 <p className="big-orange-text">Hello There!</p>
             </div>
         </div>
       </div>
-    )
-  }
+    );
 }
 
 App.propTypes = {
@@ -24,3 +21,5 @@ App.propTypes = {
 App.defaultProps = {
     className: null
 }
+
+export default App;
