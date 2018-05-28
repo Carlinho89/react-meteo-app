@@ -35,9 +35,10 @@ class MeteoCard extends Component {
 
     toggleSide = (e) => {
         !!e && e.preventDefault();
-        this.setState({
-            isSideA: !this.state.isSideA
-        });
+        !!this.props.coords &&
+            this.setState({
+                isSideA: !this.state.isSideA
+            });
     }
 
     render() {
@@ -84,8 +85,20 @@ class MeteoCard extends Component {
                         isWeathercastQueried={isWeathercastQueried}
                     />
                 }
-                {   !this.state.isSideA &&
-                    <MeteoCardSideB/>
+                {   !this.state.isSideA && this.props.coords &&
+                    <div className="h100 ">
+                        <div className="map-container">
+                            <MeteoCardSideB
+                            coords={this.props.coords}
+                            isMarkerShown
+                            googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                            loadingElement={<div className={classnames('w100', 'h100')}  />}
+                            containerElement={<div className={classnames('w100', 'h100')} />}
+                            mapElement={<div className={classnames('w100', 'h100')} />}
+                            />
+                        </div>
+                    </div>
+                    
                 }
             </div>
           );

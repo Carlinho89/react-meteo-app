@@ -28,7 +28,7 @@ const MeteoCardSideA = ({className, query, isWeathercastQueried, isQueryingWeath
                 </p>
             </div>
             <div className={classnames('col-sm-2', 'offset-sm-3')}>
-                <p className="widget-meteocard-celsius">
+                <p className={classnames('widget-meteocard-celsius', 'alignR')}>
                     {
                         !isQueryingWeathercast &&
                         isWeathercastQueried &&
